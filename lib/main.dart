@@ -6,15 +6,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Trip Theme',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Home Page'),
     );
   }
 }
@@ -29,36 +31,56 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        // appBar: AppBar(
+        //   title: Text(widget.title),
+        // ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 6, right: 6),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Row(
+                      children: const [
+                        CircleAvatar(
+                          radius: 15,
+                          child: Icon(
+                            Icons.account_circle,
+                            size: 30,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text('userEmail'),
+                        SizedBox(width: 10),
+                        IconButton(icon: Icon(Icons.logout), onPressed: null),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              const Divider(
+                color: Colors.blueAccent,
+                thickness: 1,
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+        floatingActionButton: Visibility(
+          child: FloatingActionButton(
+            onPressed: () => null,
+            tooltip: 'New Project',
+            child: const Icon(Icons.add),
+          ),
+        ));
   }
 }
