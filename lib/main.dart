@@ -83,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         IconButton(
                             icon: const Icon(Icons.logout),
                             onPressed: () {
+                              // ignore: avoid_print
                               print('logout');
                             }),
                       ],
@@ -115,18 +116,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     OutlinedButton(
                       onPressed: () {
+                        // ignore: avoid_print
                         print('OutlinedButton');
                       },
                       child: const Text('OutlinedButton'),
                     ),
                     TextButton(
                       onPressed: () {
+                        // ignore: avoid_print
                         print('TextButton');
                       },
                       child: const Text('TextButton'),
                     ),
                     MaterialButton(
                       onPressed: () {
+                        // ignore: avoid_print
                         print('MaterialButton');
                       },
                       child: const Text('MaterialButton'),
