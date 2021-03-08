@@ -89,6 +89,55 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.blueAccent,
                 thickness: 1,
               ),
+              Wrap(
+                spacing: 10,
+                children: const [
+                  Chip(avatar: Text('A'), label: Text('label1')),
+                  Chip(avatar: Text('B'), label: Text('label2')),
+                  Chip(avatar: Text('C'), label: Text('label3')),
+                  Chip(avatar: Text('D'), label: Text('label4')),
+                  Chip(avatar: Text('E'), label: Text('label5')),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.all(5),
+                child: Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Text('Leading'),
+                    title: Text('Title'),
+                    subtitle: Text('Subtitle'),
+                    isThreeLine: true,
+                    trailing: Text('Trailing'),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(5),
+                child: Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Text('Leading'),
+                    title: Text('Title'),
+                    subtitle: Text('Subtitle'),
+                    isThreeLine: true,
+                    trailing: Text('Trailing'),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(5),
+                child: Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Text('Leading'),
+                    title: Text('Title'),
+                    subtitle: Text('Subtitle'),
+                    isThreeLine: true,
+                    trailing: Text('Trailing'),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
