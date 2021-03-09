@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_gamification/custom_card.dart';
 
 import 'theme.dart';
 
@@ -50,11 +51,43 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     bool _giveVerse = true;
+    double _currentSliderValue = 20;
 
     return Scaffold(
         // appBar: AppBar(
         //   title: Text(widget.title),
         // ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: const <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Drawer Header',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.message),
+                title: Text('Messages'),
+              ),
+              ListTile(
+                leading: Icon(Icons.account_circle),
+                title: Text('Profile'),
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+              ),
+            ],
+          ),
+        ),
         body: Center(
           child: Column(
             children: <Widget>[
@@ -117,7 +150,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     OutlinedButton(
                       onPressed: () {
                         // ignore: avoid_print
-                        print('OutlinedButton');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.green,
+                            content:
+                                Text('OutlinedButton successfully created'),
+                          ),
+                        );
                       },
                       child: const Text('OutlinedButton'),
                     ),
@@ -155,6 +194,31 @@ class _MyHomePageState extends State<MyHomePage> {
                       _giveVerse = newValue;
                     });
                   }),
+              Slider(
+                value: _currentSliderValue,
+                min: 0,
+                max: 100,
+                divisions: 5,
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
+              const Padding(
+                padding: EdgeInsets.all(5),
+                child: Card(
+                  elevation: 4,
+                  child: ListTile(
+                    leading: Text('Leading'),
+                    title: Text('Title'),
+                    subtitle: Text('Subtitle'),
+                    isThreeLine: true,
+                    trailing: Text('Trailing'),
+                  ),
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.all(5),
                 child: Card(
@@ -183,15 +247,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Padding(
                 padding: EdgeInsets.all(5),
-                child: Card(
+                child: CustomCard(
+                  padding: 12,
                   elevation: 4,
-                  child: ListTile(
-                    leading: Text('Leading'),
-                    title: Text('Title'),
-                    subtitle: Text('Subtitle'),
-                    isThreeLine: true,
-                    trailing: Text('Trailing'),
-                  ),
+                  child: Text('Text sdkjkf hsf sfh bskjfbsd bfsbkj bk'),
                 ),
               ),
             ],
