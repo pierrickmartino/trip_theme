@@ -135,7 +135,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   iconColor: Colors.blue,
                   useInkWell: true,
                 ),
-                child: const Card3(),
+                child: const Card3(
+                  title: 'Weather',
+                  score: '2',
+                  headerColor: Colors.indigoAccent,
+                ),
+              ),
+              ExpandableTheme(
+                data: const ExpandableThemeData(
+                  iconColor: Colors.red,
+                  useInkWell: true,
+                ),
+                child: const Card3(
+                  title: 'Security',
+                  score: '3',
+                  headerColor: Colors.red,
+                ),
               ),
               Wrap(
                 spacing: 10,
@@ -276,7 +291,12 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Card3 extends StatelessWidget {
-  const Card3({Key key}) : super(key: key);
+  const Card3({Key key, this.title, this.score, this.headerColor})
+      : super(key: key);
+
+  final String title;
+  final String score;
+  final Color headerColor;
 
   @override
   Widget build(BuildContext context) {
@@ -297,7 +317,7 @@ class Card3 extends StatelessWidget {
 
     return ExpandableNotifier(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
         child: ScrollOnExpand(
           child: Card(
             clipBehavior: Clip.antiAlias,
@@ -311,7 +331,7 @@ class Card3 extends StatelessWidget {
                     hasIcon: false,
                   ),
                   header: Container(
-                    color: Colors.indigoAccent,
+                    color: headerColor,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
@@ -331,7 +351,7 @@ class Card3 extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  'Weather',
+                                  title,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
@@ -339,7 +359,7 @@ class Card3 extends StatelessWidget {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '- / 5',
+                                  '$score / 5',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
