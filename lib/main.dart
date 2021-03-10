@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_gamification/custom_card.dart';
 
 import 'theme.dart';
 
@@ -93,39 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 6, right: 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 15,
-                          child: Icon(
-                            Icons.account_circle,
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        const Text('userEmail'),
-                        const SizedBox(width: 10),
-                        IconButton(
-                            icon: const Icon(Icons.brightness_medium),
-                            onPressed: () {
-                              AdaptiveTheme.of(context).toggleThemeMode();
-                            }),
-                        IconButton(
-                            icon: const Icon(Icons.logout),
-                            onPressed: () {
-                              // ignore: avoid_print
-                              print('logout');
-                            }),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              const HeaderInfoExample(),
               const Divider(
                 color: Colors.blueAccent,
                 thickness: 1,
@@ -135,10 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   iconColor: Colors.blue,
                   useInkWell: true,
                 ),
-                child: const ContainerCard(
+                child: const ExpandableResultCard(
                   title: 'France',
                   score: '3',
-                  headerColor: Colors.indigoAccent,
+                  headerColor: Colors.teal,
                 ),
               ),
               Wrap(
@@ -219,53 +186,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
               ),
-              const Padding(
-                padding: EdgeInsets.all(5),
-                child: Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Text('Leading'),
-                    title: Text('Title'),
-                    subtitle: Text('Subtitle'),
-                    isThreeLine: true,
-                    trailing: Text('Trailing'),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(5),
-                child: Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Text('Leading'),
-                    title: Text('Title'),
-                    subtitle: Text('Subtitle'),
-                    isThreeLine: true,
-                    trailing: Text('Trailing'),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(5),
-                child: Card(
-                  elevation: 4,
-                  child: ListTile(
-                    leading: Text('Leading'),
-                    title: Text('Title'),
-                    subtitle: Text('Subtitle'),
-                    isThreeLine: true,
-                    trailing: Text('Trailing'),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(5),
-                child: CustomCard(
-                  padding: 12,
-                  elevation: 4,
-                  child: Text('Text sdkjkf hsf sfh bskjfbsd bfsbkj bk'),
-                ),
-              ),
+              const CardExample(),
+              const CardExample(),
+              const CardExample(),
             ],
           ),
         ),
@@ -279,29 +202,148 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class ResultCard extends StatelessWidget {
-  const ResultCard({Key key, this.title, this.score, this.headerColor})
+class HeaderInfoExample extends StatelessWidget {
+  const HeaderInfoExample({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 6, right: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            children: [
+              const CircleAvatar(
+                radius: 15,
+                child: Icon(
+                  Icons.account_circle,
+                  size: 30,
+                ),
+              ),
+              const SizedBox(width: 5),
+              const Text('userEmail'),
+              const SizedBox(width: 10),
+              IconButton(
+                  icon: const Icon(Icons.brightness_medium),
+                  onPressed: () {
+                    AdaptiveTheme.of(context).toggleThemeMode();
+                  }),
+              IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () {
+                    // ignore: avoid_print
+                    print('logout');
+                  }),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class CardExample extends StatelessWidget {
+  const CardExample({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(5),
+      child: Card(
+        elevation: 4,
+        child: ListTile(
+          leading: Text('Leading'),
+          title: Text('Title'),
+          subtitle: Text('Subtitle'),
+          isThreeLine: true,
+          trailing: Text('Trailing'),
+        ),
+      ),
+    );
+  }
+}
+
+class ExpandableSubResultCard extends StatelessWidget {
+  const ExpandableSubResultCard(
+      {Key key, this.title, this.code, this.score, this.headerColor})
       : super(key: key);
 
   final String title;
   final String score;
+  final String code;
   final Color headerColor;
 
   @override
   Widget build(BuildContext context) {
-    Widget buildItem(String label) {
+    Widget _buildItem(String labelLeft, String labelRight) {
       return Padding(
         padding: const EdgeInsets.all(10),
-        child: Text(label),
+        child: Row(
+          children: [
+            Text(labelLeft),
+            const Spacer(),
+            Text(labelRight),
+          ],
+        ),
       );
     }
 
-    Widget buildList() {
-      return Column(
-        children: <Widget>[
-          for (var i in [1, 2, 3, 4]) buildItem('Item $i'),
-        ],
-      );
+    // Widget _buildList() {
+    //   return Column(
+    //     children: <Widget>[
+    //       for (var i in [1, 2, 3, 4]) _buildItem('Item $i', ''),
+    //     ],
+    //   );
+    // }
+
+    Widget _buildContent() {
+      switch (code) {
+        case 'WEATHER':
+          return Column(
+            children: <Widget>[
+              _buildItem('Temperature min.', '12°C'),
+              _buildItem('Temperature max.', '20°C'),
+              _buildItem('Precipitation', '120mm')
+            ],
+          );
+          break;
+        case 'SECURITY':
+          return Column(
+            children: <Widget>[
+              _buildItem('Terrorist Risk', 'Low'),
+              _buildItem('Health Risk', 'Low'),
+            ],
+          );
+          break;
+        case 'DISTANCE':
+          return Column(
+            children: <Widget>[
+              _buildItem('Distance calculation', 'Low'),
+            ],
+          );
+          break;
+        case 'INTEREST':
+          return Column(
+            children: <Widget>[
+              _buildItem('Adequation with your interests', 'High'),
+            ],
+          );
+          break;
+        case 'BUDGET':
+          return Column(
+            children: <Widget>[
+              _buildItem('Budget compatibility', 'High'),
+            ],
+          );
+          break;
+        default:
+          return Column(
+            children: <Widget>[
+              for (var i in [1, 2, 3, 4]) _buildItem('Item $i', ''),
+            ],
+          );
+      }
     }
 
     return ExpandableNotifier(
@@ -361,7 +403,7 @@ class ResultCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  expanded: buildList(),
+                  expanded: _buildContent(),
                 ),
               ],
             ),
@@ -372,8 +414,9 @@ class ResultCard extends StatelessWidget {
   }
 }
 
-class ContainerCard extends StatelessWidget {
-  const ContainerCard({Key key, this.title, this.score, this.headerColor})
+class ExpandableResultCard extends StatelessWidget {
+  const ExpandableResultCard(
+      {Key key, this.title, this.score, this.headerColor})
       : super(key: key);
 
   final String title;
@@ -390,10 +433,11 @@ class ContainerCard extends StatelessWidget {
               iconColor: Colors.blue,
               useInkWell: true,
             ),
-            child: const ResultCard(
+            child: const ExpandableSubResultCard(
               title: 'Weather',
-              score: '2',
-              headerColor: Colors.green,
+              code: 'WEATHER',
+              score: '4',
+              headerColor: Colors.indigoAccent,
             ),
           ),
           ExpandableTheme(
@@ -401,10 +445,47 @@ class ContainerCard extends StatelessWidget {
               iconColor: Colors.red,
               useInkWell: true,
             ),
-            child: const ResultCard(
+            child: const ExpandableSubResultCard(
               title: 'Security',
+              code: 'SECURITY',
               score: '3',
-              headerColor: Colors.red,
+              headerColor: Colors.indigoAccent,
+            ),
+          ),
+          ExpandableTheme(
+            data: const ExpandableThemeData(
+              iconColor: Colors.red,
+              useInkWell: true,
+            ),
+            child: const ExpandableSubResultCard(
+              title: 'Distance',
+              code: 'DISTANCE',
+              score: '3',
+              headerColor: Colors.indigoAccent,
+            ),
+          ),
+          ExpandableTheme(
+            data: const ExpandableThemeData(
+              iconColor: Colors.red,
+              useInkWell: true,
+            ),
+            child: const ExpandableSubResultCard(
+              title: 'Interest',
+              code: 'INTEREST',
+              score: '3',
+              headerColor: Colors.indigoAccent,
+            ),
+          ),
+          ExpandableTheme(
+            data: const ExpandableThemeData(
+              iconColor: Colors.red,
+              useInkWell: true,
+            ),
+            child: const ExpandableSubResultCard(
+              title: 'Budget',
+              code: 'BUDGET',
+              score: '3',
+              headerColor: Colors.indigoAccent,
             ),
           ),
         ],
