@@ -89,107 +89,109 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              const HeaderInfoExample(),
-              const Divider(
-                color: Colors.blueAccent,
-                thickness: 1,
-              ),
-              ExpandableTheme(
-                data: const ExpandableThemeData(
-                  iconColor: Colors.blue,
-                  useInkWell: true,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                const HeaderInfoExample(),
+                const Divider(
+                  color: Colors.blueAccent,
+                  thickness: 1,
                 ),
-                child: const ExpandableResultCard(
-                  title: 'France',
-                  score: '3',
-                  headerColor: Colors.teal,
+                ExpandableTheme(
+                  data: const ExpandableThemeData(
+                    iconColor: Colors.blue,
+                    useInkWell: true,
+                  ),
+                  child: const ExpandableResultCard(
+                    title: 'France',
+                    score: '3',
+                    headerColor: Colors.teal,
+                  ),
                 ),
-              ),
-              Wrap(
-                spacing: 10,
-                children: const [
-                  Chip(avatar: Text('A'), label: Text('label1')),
-                  Chip(avatar: Text('B'), label: Text('label2')),
-                  Chip(avatar: Text('C'), label: Text('label3')),
-                  Chip(avatar: Text('D'), label: Text('label4')),
-                  Chip(avatar: Text('E'), label: Text('label5')),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Wrap(
+                Wrap(
                   spacing: 10,
-                  children: [
-                    const OutlinedButton(
-                      onPressed: null,
-                      child: Text('OutlinedButton'),
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        // ignore: avoid_print
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.green,
-                            content:
-                                Text('OutlinedButton successfully created'),
-                          ),
-                        );
-                      },
-                      child: const Text('OutlinedButton'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        // ignore: avoid_print
-                        print('TextButton');
-                      },
-                      child: const Text('TextButton'),
-                    ),
-                    MaterialButton(
-                      onPressed: () {
-                        // ignore: avoid_print
-                        print('MaterialButton');
-                      },
-                      child: const Text('MaterialButton'),
-                    )
+                  children: const [
+                    Chip(avatar: Text('A'), label: Text('label1')),
+                    Chip(avatar: Text('B'), label: Text('label2')),
+                    Chip(avatar: Text('C'), label: Text('label3')),
+                    Chip(avatar: Text('D'), label: Text('label4')),
+                    Chip(avatar: Text('E'), label: Text('label5')),
                   ],
                 ),
-              ),
-              Text('headline1', style: Theme.of(context).textTheme.headline1),
-              Text('headline2', style: Theme.of(context).textTheme.headline2),
-              Text('headline3', style: Theme.of(context).textTheme.headline3),
-              Text('headline4', style: Theme.of(context).textTheme.headline4),
-              Text('headline5', style: Theme.of(context).textTheme.headline5),
-              Text('headline6', style: Theme.of(context).textTheme.headline6),
-              Text('subtitle1', style: Theme.of(context).textTheme.subtitle1),
-              Text('subtitle2', style: Theme.of(context).textTheme.subtitle2),
-              Text('bodyText1', style: Theme.of(context).textTheme.bodyText1),
-              Text('bodyText2', style: Theme.of(context).textTheme.bodyText2),
-              Switch(
-                  value: _giveVerse,
-                  onChanged: (bool newValue) {
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Wrap(
+                    spacing: 10,
+                    children: [
+                      const OutlinedButton(
+                        onPressed: null,
+                        child: Text('OutlinedButton'),
+                      ),
+                      OutlinedButton(
+                        onPressed: () {
+                          // ignore: avoid_print
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content:
+                                  Text('OutlinedButton successfully created'),
+                            ),
+                          );
+                        },
+                        child: const Text('OutlinedButton'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // ignore: avoid_print
+                          print('TextButton');
+                        },
+                        child: const Text('TextButton'),
+                      ),
+                      MaterialButton(
+                        onPressed: () {
+                          // ignore: avoid_print
+                          print('MaterialButton');
+                        },
+                        child: const Text('MaterialButton'),
+                      )
+                    ],
+                  ),
+                ),
+                Text('headline1', style: Theme.of(context).textTheme.headline1),
+                Text('headline2', style: Theme.of(context).textTheme.headline2),
+                Text('headline3', style: Theme.of(context).textTheme.headline3),
+                Text('headline4', style: Theme.of(context).textTheme.headline4),
+                Text('headline5', style: Theme.of(context).textTheme.headline5),
+                Text('headline6', style: Theme.of(context).textTheme.headline6),
+                Text('subtitle1', style: Theme.of(context).textTheme.subtitle1),
+                Text('subtitle2', style: Theme.of(context).textTheme.subtitle2),
+                Text('bodyText1', style: Theme.of(context).textTheme.bodyText1),
+                Text('bodyText2', style: Theme.of(context).textTheme.bodyText2),
+                Switch(
+                    value: _giveVerse,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        _giveVerse = newValue;
+                      });
+                    }),
+                Slider(
+                  value: _currentSliderValue,
+                  //min: 0,
+                  max: 100,
+                  divisions: 5,
+                  label: _currentSliderValue.round().toString(),
+                  onChanged: (double value) {
                     setState(() {
-                      _giveVerse = newValue;
+                      _currentSliderValue = value;
                     });
-                  }),
-              Slider(
-                value: _currentSliderValue,
-                //min: 0,
-                max: 100,
-                divisions: 5,
-                label: _currentSliderValue.round().toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
-                },
-              ),
-              const CardExample(),
-              const CardExample(),
-              const CardExample(),
-            ],
+                  },
+                ),
+                const CardExample(),
+                const CardExample(),
+                const CardExample(),
+              ],
+            ),
           ),
         ),
         floatingActionButton: Visibility(
