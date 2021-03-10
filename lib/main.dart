@@ -1,4 +1,6 @@
+import 'dart:math' as math;
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_gamification/custom_card.dart';
 
@@ -128,6 +130,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.blueAccent,
                 thickness: 1,
               ),
+              ExpandableTheme(
+                data: const ExpandableThemeData(
+                  iconColor: Colors.blue,
+                  useInkWell: true,
+                ),
+                child: const Card3(),
+              ),
               Wrap(
                 spacing: 10,
                 children: const [
@@ -196,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
               Slider(
                 value: _currentSliderValue,
-                min: 0,
+                //min: 0,
                 max: 100,
                 divisions: 5,
                 label: _currentSliderValue.round().toString(),
@@ -263,5 +272,93 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Icon(Icons.add),
           ),
         ));
+  }
+}
+
+class Card3 extends StatelessWidget {
+  const Card3({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Widget buildItem(String label) {
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text(label),
+      );
+    }
+
+    Widget buildList() {
+      return Column(
+        children: <Widget>[
+          for (var i in [1, 2, 3, 4]) buildItem('Item $i'),
+        ],
+      );
+    }
+
+    return ExpandableNotifier(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ScrollOnExpand(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              children: <Widget>[
+                ExpandablePanel(
+                  theme: const ExpandableThemeData(
+                    headerAlignment: ExpandablePanelHeaderAlignment.center,
+                    tapBodyToExpand: true,
+                    tapBodyToCollapse: true,
+                    hasIcon: false,
+                  ),
+                  header: Container(
+                    color: Colors.indigoAccent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          ExpandableIcon(
+                            theme: const ExpandableThemeData(
+                              expandIcon: Icons.arrow_right,
+                              collapseIcon: Icons.arrow_drop_down,
+                              iconColor: Colors.white,
+                              iconSize: 28,
+                              iconRotationAngle: math.pi / 2,
+                              iconPadding: EdgeInsets.only(right: 5),
+                              hasIcon: false,
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Weather',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(color: Colors.white),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '- / 5',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  expanded: buildList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
