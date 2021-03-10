@@ -135,21 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   iconColor: Colors.blue,
                   useInkWell: true,
                 ),
-                child: const Card3(
-                  title: 'Weather',
-                  score: '2',
-                  headerColor: Colors.indigoAccent,
-                ),
-              ),
-              ExpandableTheme(
-                data: const ExpandableThemeData(
-                  iconColor: Colors.red,
-                  useInkWell: true,
-                ),
-                child: const Card3(
-                  title: 'Security',
+                child: const ContainerCard(
+                  title: 'France',
                   score: '3',
-                  headerColor: Colors.red,
+                  headerColor: Colors.indigoAccent,
                 ),
               ),
               Wrap(
@@ -290,8 +279,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class Card3 extends StatelessWidget {
-  const Card3({Key key, this.title, this.score, this.headerColor})
+class ResultCard extends StatelessWidget {
+  const ResultCard({Key key, this.title, this.score, this.headerColor})
       : super(key: key);
 
   final String title;
@@ -311,6 +300,113 @@ class Card3 extends StatelessWidget {
       return Column(
         children: <Widget>[
           for (var i in [1, 2, 3, 4]) buildItem('Item $i'),
+        ],
+      );
+    }
+
+    return ExpandableNotifier(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+        child: ScrollOnExpand(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              children: <Widget>[
+                ExpandablePanel(
+                  theme: const ExpandableThemeData(
+                    headerAlignment: ExpandablePanelHeaderAlignment.center,
+                    tapBodyToExpand: true,
+                    tapBodyToCollapse: true,
+                    hasIcon: false,
+                  ),
+                  header: Container(
+                    color: headerColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          ExpandableIcon(
+                            theme: const ExpandableThemeData(
+                              expandIcon: Icons.arrow_right,
+                              collapseIcon: Icons.arrow_drop_down,
+                              iconColor: Colors.white,
+                              iconSize: 28,
+                              iconRotationAngle: math.pi / 2,
+                              iconPadding: EdgeInsets.only(right: 5),
+                              hasIcon: false,
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Text(
+                                  title,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(color: Colors.white),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '$score / 5',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  expanded: buildList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ContainerCard extends StatelessWidget {
+  const ContainerCard({Key key, this.title, this.score, this.headerColor})
+      : super(key: key);
+
+  final String title;
+  final String score;
+  final Color headerColor;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget buildScoringResult() {
+      return Column(
+        children: <Widget>[
+          ExpandableTheme(
+            data: const ExpandableThemeData(
+              iconColor: Colors.blue,
+              useInkWell: true,
+            ),
+            child: const ResultCard(
+              title: 'Weather',
+              score: '2',
+              headerColor: Colors.green,
+            ),
+          ),
+          ExpandableTheme(
+            data: const ExpandableThemeData(
+              iconColor: Colors.red,
+              useInkWell: true,
+            ),
+            child: const ResultCard(
+              title: 'Security',
+              score: '3',
+              headerColor: Colors.red,
+            ),
+          ),
         ],
       );
     }
@@ -372,7 +468,7 @@ class Card3 extends StatelessWidget {
                       ),
                     ),
                   ),
-                  expanded: buildList(),
+                  expanded: buildScoringResult(),
                 ),
               ],
             ),
